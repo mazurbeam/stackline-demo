@@ -22,18 +22,14 @@ function App() {
 
   return (
     <>
-      <div className='h-screen  '>
+      <div className='h-screen'>
         <Header/>
         <div className='flex flex-row bg-lightgray h-full pt-10'>
-
           <SideBar />
-
           <div className='m-4 pl-10 bg-white'>
             <Table/>
           </div>
         </div>
-
-
       </div>
     </>
   )

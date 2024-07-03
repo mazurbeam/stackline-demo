@@ -18,29 +18,29 @@ const columnHelper = createColumnHelper<SaleType>()
 
 const columns = [
   columnHelper.accessor('weekEnding', {
-    header: () =>'WEEK ENDING',
+    header: () =>'Week Ending',
     cell: info => dayjs(info.getValue()).format('MM-DD-YY'),
     footer: info => info.column.id,
   }),
   columnHelper.accessor('retailSales', {
-    header: () => 'RETAIL SALES',
+    header: () => 'Retail Sales',
     // @ts-ignore
     cell: info => formatMoney(info.renderValue()),
     footer: info => info.column.id,
   }),
   columnHelper.accessor('wholesaleSales', {
-    header: () => 'WHOLESALE SALES',
+    header: () => 'Wholesale Sales',
     // @ts-ignore
     cell: info => formatMoney(info.renderValue()),
     footer: info => info.column.id,
   }),
   columnHelper.accessor('unitsSold', {
-    header: () => 'UNITS SOLD',
+    header: () => 'Units Sold',
     cell: info => info.renderValue(),
     footer: info => info.column.id,
   }),
   columnHelper.accessor('retailerMargin', {
-    header: () => 'RETAILER MARGIN',
+    header: () => 'Retailer Margin',
     // @ts-ignore
     cell: info => formatMoney(info.renderValue()),
     footer: info => info.column.id,
@@ -64,13 +64,20 @@ const Table = () => {
 
   return (
     <div className='w-max'>
-      <table>
+      <table
+        className={'min-w-full divide-y divide-gray-200'}
+      >
         <thead>
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map(header => {
               return (
-                <th key={header.id} colSpan={header.colSpan}>
+                <th
+                  key={header.id}
+                  colSpan={header.colSpan}
+                  scope="col"
+                  className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
+                >
                   {header.isPlaceholder ? null : (
                     <div
                       className={
