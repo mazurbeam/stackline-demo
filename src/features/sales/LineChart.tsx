@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAppSelector} from "../../store/hooks.ts";
 import {selectSales} from "./salesSlice.ts";
-import { AxisOptions, Chart } from "react-charts";
+import { AxisOptions } from "react-charts";
 import ResizeableBox from '../../components/ResizeableBox';
 
 

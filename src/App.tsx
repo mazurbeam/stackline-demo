@@ -26,7 +26,7 @@ function App() {
         <Header/>
         <div className='flex flex-row bg-lightgray h-full pt-10'>
 
-          <SideBar/>
+          <SideBar />
 
           <div className='m-4 pl-10 bg-white'>
             <Table/>
