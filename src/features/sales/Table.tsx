@@ -1,3 +1,4 @@
+import React from 'react'
 import {useAppSelector} from "../../store/hooks.ts";
 import {SaleType, selectSales} from "./salesSlice.ts";
 import dayjs from "dayjs";
@@ -6,6 +7,8 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getSortedRowModel,
+  SortingState
 } from '@tanstack/react-table'
 import {
   formatMoney
@@ -26,7 +29,7 @@ const columns = [
   }),
   columnHelper.accessor('wholesaleSales', {
     header: () => 'WHOLESALE SALES',
-    cell: info => info.renderValue(),
+    cell: info => formatMoney(info.renderValue()),
     footer: info => info.column.id,
   }),
   columnHelper.accessor('unitsSold', {
@@ -36,18 +39,24 @@ const columns = [
   }),
   columnHelper.accessor('retailerMargin', {
     header: () => 'RETAILER MARGIN',
-    cell: info => info.renderValue(),
+    cell: info => formatMoney(info.renderValue()),
     footer: info => info.column.id,
   }),
 ]
 
 const Table = () => {
   const sales = useAppSelector(selectSales)
+  const [sorting, setSorting] = React.useState<SortingState>([])
 
   const table = useReactTable({
     data: sales || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(), //client-side sorting
+    onSortingChange: setSorting,
+    state: {
+      sorting
+    }
   })
 
   return (
@@ -56,29 +65,63 @@ const Table = () => {
         <thead>
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id}>
-            {headerGroup.headers.map(header => (
-              <th key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
+            {headerGroup.headers.map(header => {
+              return (
+                <th key={header.id} colSpan={header.colSpan}>
+                  {header.isPlaceholder ? null : (
+                    <div
+                      className={
+                        header.column.getCanSort()
+                          ? 'cursor-pointer select-none'
+                          : '' + ''
+                      }
+                      onClick={header.column.getToggleSortingHandler()}
+                      title={
+                        header.column.getCanSort()
+                          ? header.column.getNextSortingOrder() === 'asc'
+                            ? 'Sort ascending'
+                            : header.column.getNextSortingOrder() === 'desc'
+                              ? 'Sort descending'
+                              : 'Clear sort'
+                          : undefined
+                      }
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                      {{
+                        asc: ' 🔼',
+                        desc: ' 🔽',
+                      }[header.column.getIsSorted() as string] ?? null}
+                    </div>
                   )}
-              </th>
-            ))}
+                </th>
+              )
+            })}
           </tr>
         ))}
         </thead>
         <tbody>
-        {table.getRowModel().rows.map(row => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map(cell => (
-              <td key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
+        {table
+          .getRowModel()
+          .rows.slice(0, 10)
+          .map(row => {
+            return (
+              <tr key={row.id}>
+                {row.getVisibleCells().map(cell => {
+                  return (
+                    <td key={cell.id} className={'text-gray-400'}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  )
+                })}
+              </tr>
+            )
+          })}
         </tbody>
 
       </table>
