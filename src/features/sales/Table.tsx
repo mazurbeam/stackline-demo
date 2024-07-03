@@ -24,11 +24,13 @@ const columns = [
   }),
   columnHelper.accessor('retailSales', {
     header: () => 'RETAIL SALES',
+    // @ts-ignore
     cell: info => formatMoney(info.renderValue()),
     footer: info => info.column.id,
   }),
   columnHelper.accessor('wholesaleSales', {
     header: () => 'WHOLESALE SALES',
+    // @ts-ignore
     cell: info => formatMoney(info.renderValue()),
     footer: info => info.column.id,
   }),
@@ -39,6 +41,7 @@ const columns = [
   }),
   columnHelper.accessor('retailerMargin', {
     header: () => 'RETAILER MARGIN',
+    // @ts-ignore
     cell: info => formatMoney(info.renderValue()),
     footer: info => info.column.id,
   }),
