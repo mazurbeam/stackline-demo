@@ -24,7 +24,7 @@ function App() {
     <>
       <div className='h-screen'>
         <Header/>
-        <div className='flex flex-row bg-lightgray h-full pt-10'>
+        <div className='flex flex-row bg-lightgray h-max pt-10'>
           <SideBar />
           <div className='m-4 pl-10 bg-white'>
             <Table/>

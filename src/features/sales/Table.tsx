@@ -63,7 +63,7 @@ const Table = () => {
   })
 
   return (
-    <div className='w-max'>
+    <div className='w-max bg-white'>
       <table
         className={'min-w-full divide-y divide-gray-200'}
       >
@@ -76,7 +76,7 @@ const Table = () => {
                   key={header.id}
                   colSpan={header.colSpan}
                   scope="col"
-                  className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
+                  className="px-3 py-3 text-xs font-bold text-left  uppercase "
                 >
                   {header.isPlaceholder ? null : (
                     <div
@@ -115,7 +115,7 @@ const Table = () => {
         <tbody>
         {table
           .getRowModel()
-          .rows.slice(0, 10)
+          .rows
           .map(row => {
             return (
               <tr key={row.id}>
