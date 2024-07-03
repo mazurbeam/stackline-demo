@@ -1,4 +1,3 @@
-import React from 'react';
 import {useAppSelector} from "../../store/hooks.ts";
 import {selectProduct} from "./salesSlice.ts";
 

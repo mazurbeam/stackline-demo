@@ -1,4 +1,4 @@
-import React from 'react';
+// @ts-ignore
 import Logo from '../assets/stackline_logo.svg?react'
 
 const Header = () => {
